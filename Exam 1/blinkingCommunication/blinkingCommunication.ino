@@ -30,6 +30,7 @@ void loop() {
   delay response. Multiple bytes of data may be available.
 */
 void serialEvent() {
+  
   while (Serial.available()) {
     // get the new byte:
     char inChar = (char)Serial.read();
@@ -37,14 +38,14 @@ void serialEvent() {
     if (inChar == ' ') {
       flashes = inputString.toInt();
       inputString = "";
-      Serial.print("Flashes: ");
-      Serial.println(flashes);
+      
     } else if (inChar == '\n') {
-      periodMS = inputString.toInt();;
+      periodMS = inputString.toInt();
       inputString = "";
       isFlashSet = true;
-      Serial.print("Period: ");
-      Serial.println(periodMS);
+
+      Serial.print("Flashes = " + String(flashes) + "  ");
+      Serial.println( "PeriodMS = " + String(periodMS));
     } else {
       inputString += inChar;
     }
