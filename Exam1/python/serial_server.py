@@ -5,7 +5,7 @@ import threading
 app = flask.Flask(__name__, static_url_path="", static_folder="public")
 
 serial_lock = threading.Lock()
-blink = my_blinker.Blinker() #TODO: set port if needed
+blink = my_blinker.Blinker()
 
 @app.get("/api/<flashes>/<periodMS>")
 def handle_commands(flashes, periodMS):
