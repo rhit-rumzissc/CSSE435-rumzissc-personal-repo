@@ -1,16 +1,16 @@
 import flask
-import python.blinker as blinker
+import my_blinker
 import threading
 
 app = flask.Flask(__name__, static_url_path="", static_folder="public")
 
 serial_lock = threading.Lock()
-blink = blinker.Blinker() #TODO: set port if needed
+blink = my_blinker.Blinker() #TODO: set port if needed
 
 @app.get("/api/<flashes>/<periodMS>")
 def handle_commands(flashes, periodMS):
     with serial_lock:
-        response = blink.send_command(flashes, periodMS)
+        response = blink.send_flash(flashes, periodMS)
     return response
 
 @app.route("/")

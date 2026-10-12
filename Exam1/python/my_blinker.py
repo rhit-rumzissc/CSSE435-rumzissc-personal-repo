@@ -10,7 +10,7 @@ class Blinker:
     def connect(self):
         if self.ser and self.ser.is_open:
             return
-        self.ser = serial.Serial(port=self.port, baudrate=19200, timeout=5)
+        self.ser = serial.Serial(port=self.port, baudrate=19200, timeout=15)
         time.sleep(2.0)
         self.ser.reset_input_buffer()     
 
@@ -18,7 +18,7 @@ class Blinker:
         if self.ser and self.ser.is_open:
             self.ser.close()
 
-    def send_command(self, flashes, periodMS):
+    def send_flash(self, flashes, periodMS):
         self.ser.reset_input_buffer()
         message_bytes = (str(flashes) + " " + str(periodMS) + "\n").encode()
         print(message_bytes)
@@ -33,8 +33,6 @@ if __name__ == "__main__":
     print("Quick Blinker testing")
     blink = Blinker()
     blink.connect()
-    blink.send_command(4, 1000)
-
-    response = blink.send_command(9, 800)
+    response = blink.send_flash(6, 500)
     print("Response: ", response)
     blink.disconnect()

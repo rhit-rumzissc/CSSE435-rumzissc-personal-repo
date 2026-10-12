@@ -1,6 +1,6 @@
-import flask
+from flask import Flask
 
-app = flask.Flask(__name__, static_url_path="", static_folder="public")
+app = Flask(__name__, static_url_path="", static_folder="public")
 @app.route("/")
 def hello_route():
     return "Hello, World!!!"
