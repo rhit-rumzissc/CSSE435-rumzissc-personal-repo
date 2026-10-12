@@ -1,5 +1,5 @@
-async function sendCommand(flask, periodMS){
-    var response = await fetch(`/api/${flask}/${periodMS}`);
+async function sendFlash(flashes, periodMS){
+    var response = await fetch(`/api/${flashes}/${periodMS}`);
     var replyText = await response.text();
     
     console.log(replyText)
@@ -22,7 +22,7 @@ function main() {
         let flashes = document.querySelector("#flashes").value;
         let periodMS = document.querySelector("#periodMS").value;
         console.log("FLASH!");
-        sendCommand(`${flashes}, ${periodMS}`);
+        sendFlash(flashes, periodMS);
     };
 
 }
