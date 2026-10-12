@@ -13,6 +13,12 @@ def handle_commands(flashes, periodMS):
         response = blink.send_flash(flashes, periodMS)
     return response
 
+@app.get("/api/<LEDState>")
+def handle_LED_commands(LEDState):
+    with serial_lock:
+        response = blink.send_LED_State(LEDState)
+    return response
+
 @app.route("/")
 def naked_domain_route():
     return flask.redirect("/index.html")

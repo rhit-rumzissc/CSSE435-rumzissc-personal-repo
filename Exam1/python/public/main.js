@@ -7,15 +7,24 @@ async function sendFlash(flashes, periodMS){
     return replyText
 }
 
+async function sendLEDState(LEDState){
+    var response = await fetch(`/api/${LEDState}`);
+    var replyText = await response.text();
+    
+    console.log(replyText)
+    document.querySelector("#replyText").innerHTML = replyText;
+    return replyText
+}
+
 function main() {
     console.log("Hello JavaScript!");
     document.querySelector('#on').onclick = () => {
         console.log("You pressed the ON button!");
-        //sendCommand("RESET");
+        sendLEDState("LED ON")
     };
     document.querySelector('#off').onclick = () => {
         console.log("You pressed the OFF button!");
-        //sendCommand("RESET");
+        sendLEDState("LED OFF")
     };
     
     document.querySelector('#flash').onclick = () => {

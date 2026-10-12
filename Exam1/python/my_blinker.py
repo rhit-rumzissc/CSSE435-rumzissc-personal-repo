@@ -29,6 +29,17 @@ class Blinker:
         response = response_bytes.decode().strip()
         return response
 
+    def send_LED_State(self, LEDState):
+            self.ser.reset_input_buffer()
+            message_bytes = (str(LEDState) + "\n").encode()
+            print(message_bytes)
+            self.ser.write(message_bytes)
+    
+            response_bytes = self.ser.readline()
+            print(response_bytes)
+            response = response_bytes.decode().strip()
+            return response
+
 if __name__ == "__main__":
     print("Quick Blinker testing")
     blink = Blinker()
