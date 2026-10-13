@@ -1,0 +1,17 @@
+classdef BlinkerRemote < hgsetget
+    properties
+        serialBlinker
+        
+    end
+
+methods
+    function obj = BlinkerRemote(port)
+        URL = ("http://192.168.1.14:");
+
+        obj.serialBlinker = URL;
+        %response = webread(obj.serialBlinker + num2str(port) + "/api/")
+    end
+    function response = LEDOn(obj, port)
+        response = webread(obj.serialBlinker + num2str(port) + "/api/LED%20ON");
+    end
+end
