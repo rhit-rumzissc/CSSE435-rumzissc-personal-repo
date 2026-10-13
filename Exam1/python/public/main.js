@@ -1,5 +1,5 @@
 async function sendFlash(flashes, periodMS){
-    var response = await fetch(`/api/${flashes}/${periodMS}`);
+    var response = await fetch(`/api/flash/${flashes}/${periodMS}`);
     var replyText = await response.text();
     
     console.log(replyText)
@@ -8,7 +8,7 @@ async function sendFlash(flashes, periodMS){
 }
 
 async function sendLEDState(LEDState){
-    var response = await fetch(`/api/${LEDState}`);
+    var response = await fetch(`/api/led/${LEDState}`);
     var replyText = await response.text();
     
     console.log(replyText)
@@ -20,11 +20,11 @@ function main() {
     console.log("Hello JavaScript!");
     document.querySelector('#on').onclick = () => {
         console.log("You pressed the ON button!");
-        sendLEDState("LED ON")
+        sendLEDState("on")
     };
     document.querySelector('#off').onclick = () => {
         console.log("You pressed the OFF button!");
-        sendLEDState("LED OFF")
+        sendLEDState("off")
     };
     
     document.querySelector('#flash').onclick = () => {
