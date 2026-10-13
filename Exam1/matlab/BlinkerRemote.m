@@ -6,21 +6,21 @@ classdef BlinkerRemote < hgsetget
 
     methods
         function obj = BlinkerRemote()
-            URL = ("http://192.168.1.14:8080");
+            URL = ("http://roemigkc-pi400.rose-hulman.edu:8080");
     
             obj.serialBlinker = URL;
             %response = webread(obj.serialBlinker + num2str(port) + "/api/")
         end
         function response = LEDOn(obj)
-            response = webread(obj.serialBlinker + "/api/LED%20ON");
+            response = webread(obj.serialBlinker + "/api/led/on");
              fprintf('%s\n', response);
         end
         function response = LEDOff(obj)
-            response = webread(obj.serialBlinker  + "/api/LED%20OFF");
+            response = webread(obj.serialBlinker  + "/api/led/off");
              fprintf('%s\n', response);
         end
         function response = Flash(obj, flashes, periodMS)
-            response = webread(obj.serialBlinker + "/api/" + num2str(flashes) + "/" + num2str(periodMS));
+            response = webread(obj.serialBlinker + "/api/flash/" + num2str(flashes) + "/" + num2str(periodMS));
              fprintf('%s\n', response);
         end
     end
