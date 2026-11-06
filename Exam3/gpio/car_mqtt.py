@@ -14,7 +14,6 @@ class App:
         self.mqtt_client.callback = self.mqtt_callback
 
     def mqtt_callback(self, message_type, message_payload):
-    
         
         if message_type == "left":
             print("Side: " + message_type + 
@@ -52,19 +51,19 @@ class App:
                 self.robot.drive_system.set_speeds(-message_payload[2],-message_payload[2],-message_payload[3],-message_payload[3])
             time.sleep(message_payload[1])
             self.robot.drive_system.stop()
-        
 
 def main():
     print("GPIO MQTT")
     app = App()
     
-
     try:
         while True:
-            app.mqtt_client.send_message("ultra", app.robot.ultra.get_cm())
+            ultra_reading = app.robot.ultra.get_cm()
+            print("Ultra: " + ultra_reading)
+            app.mqtt_client.send_message("ultra", round(ultra_reading))
             time.sleep(2)
 
-        signal.pause() # keeps program running
+        #signal.pause() # keeps program running
 
     except KeyboardInterrupt:
         print("Goodbye")
