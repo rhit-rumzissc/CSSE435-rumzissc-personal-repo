@@ -6,20 +6,19 @@ import time
 class App:
     def __init__(self):
         self.robot = Rosebot()
-        self.ultra = self.robot.ultrasonic()
 
         self.mqtt_client = mh.MqttClient()
-        self.mqtt_client.connect(subscription_topic_name="me435/rumzissc/#",
-                                 publish_topic_name="me435/rumzissc/")
+        self.mqtt_client.connect(subscription_topic_name="me435/rumzissc/to_pi/#",
+                                 publish_topic_name="me435/rumzissc/to_computer")
         self.mqtt_client.callback = self.mqtt_callback
 
     def mqtt_callback(self, message_type, message_payload):
         
         if message_type == "left":
-            print("Side: " + message_type + 
-                        "  Direction: " + message_payload[0] +
-                        "  Time: " + message_payload[1] +
-                        "  Speed: " + message_payload[2])
+            print("Side: " + str(message_type) + 
+                        "  Direction: " + str(message_payload[0]) +
+                        "  Time: " + str(round(message_payload[1],2)) +
+                        "  Speed: " + str(round(message_payload[2],3)))
             if message_payload[0]: #forwards
                 self.robot.drive_system.set_speeds(message_payload[2],message_payload[2], 0, 0)
             else: 
@@ -28,10 +27,10 @@ class App:
             self.robot.drive_system.stop()
 
         if message_type == "right":
-            print("Side: " + message_type + 
-                        "  Direction: " + message_payload[0] +
-                        "  Time: " + message_payload[1] +
-                        "  Speed: " + message_payload[2])
+            print("Side: " + str(message_type) + 
+                        "  Direction: " + str(message_payload[0]) +
+                        "  Time: " + str(round(message_payload[1],2)) +
+                        "  Speed: " + str(round(message_payload[2],3)))
             if message_payload[0]: #forwards
                 self.robot.drive_system.set_speeds(0, 0, message_payload[2],message_payload[2])
             else: 
@@ -40,11 +39,11 @@ class App:
             self.robot.drive_system.stop()
 
         if message_type == "both":
-            print("Side: " + message_type + 
-                        "  Direction: " + message_payload[0] +
-                        "  Time: " + message_payload[1] +
-                        "  Speed Left: " + message_payload[2] +
-                        "  Speed Right: " + message_payload[3])
+            print("Side: " + str(message_type) + 
+                        "  Direction: " + str(message_payload[0]) +
+                        "  Time: " + str(round(message_payload[1],2)) +
+                        "  Speed Left: " + str(round(message_payload[2],3)) +
+                        "  Speed Right: " + str(round(message_payload[3],3)))
             if message_payload[0]: #forwards
                 self.robot.drive_system.set_speeds(message_payload[2],message_payload[2],message_payload[3],message_payload[3])
             else: 
@@ -58,8 +57,8 @@ def main():
     
     try:
         while True:
-            ultra_reading = app.robot.ultra.get_cm()
-            print("Ultra: " + ultra_reading)
+            ultra_reading = app.robot.ultrasonic.get_cm()
+            print("Ultra: " + str(ultra_reading))
             app.mqtt_client.send_message("ultra", round(ultra_reading))
             time.sleep(2)
 

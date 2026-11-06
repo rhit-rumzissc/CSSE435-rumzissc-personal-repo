@@ -77,7 +77,7 @@ class MqttClient(object):
   # noinspection PyUnusedLocal
   def _on_message(self, client, userdata, msg):
     message = msg.payload.decode()
-    print("Received message:", message)
+    #print("Received message:", message)
     if not self.callback:
         print("Missing a callback")
         return
